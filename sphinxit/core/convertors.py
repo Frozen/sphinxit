@@ -49,10 +49,15 @@ class FilterCtx(CtxMixin):
                 is_strict=self.is_strict
             )
         if isinstance(self.v_attr, (tuple, list)):
-            v_attr = list_of_integers_only(
-                v_attr,
-                is_strict=self.is_strict
-            )
+
+            # for v in self.v_attr:
+            #     if not isinstance(v, (int, float)) and not self.__exit__(
+            #         exc_val=SphinxQLSyntaxException(
+            #             'value %s must be instance of int or float' % v
+            #         )
+            #     ):
+            # continue
+            pass
         if isinstance(self.v_attr, (datetime, date)):
             v_attr = unix_timestamp(self.v_attr)
 
@@ -128,6 +133,7 @@ class ORFilterCtx(FilterCtx):
         '__gte': '{a}>={v}',
         '__lt': '{a}<{v}',
         '__lte': '{a}<={v}',
+        '__between': '({a} >= {f_v} and {a} <= {s_v})'
     }
 
 

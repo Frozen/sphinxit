@@ -31,6 +31,11 @@ from sphinxit.core.helpers import (
 from sphinxit.core.exceptions import SphinxQLSyntaxException
 from sphinxit.core.mixins import ConfigMixin
 
+try:
+    reduce
+except NameError:
+    from functools import reduce
+
 
 class SelectFromContainer(ConfigMixin):
     _joiner = ', '

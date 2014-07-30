@@ -231,7 +231,7 @@ class TestFilterCtx(unittest.TestCase):
             self.assertEqual(value, 'age IN (1,2,3)')
 
         with FilterCtxSoft('age__in', (1, '2', 'string', 3, '42d')) as value:
-            self.assertEqual(value, 'age IN (1,2,3)')
+            self.assertEqual(value, '''age IN (1,'2','string',3,'42d')''')
 
         with FilterCtxSoft('age__in', []) as value:
             self.assertIsNone(value)
@@ -268,7 +268,8 @@ class TestFilterCtx(unittest.TestCase):
             self.assertEqual(value, 'age BETWEEN 1 AND 25')
 
         with FilterCtxSoft('age__between', (1, 'string')) as value:
-            self.assertIsNone(value)
+            # self.assertIsNone(value)
+            self.assertEqual("age BETWEEN 1 AND 'string'", value)
 
         with FilterCtxSoft('age__between', ()) as value:
             self.assertIsNone(value)
